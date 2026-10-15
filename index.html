@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>PCアシスタントを入れる</title>
+<!-- D90 (lane WI1): the install page. Static and self-contained: no external font, script, image or tracker. -->
+<style>
+  :root {
+    --ink: #1f2523; --muted: #5b636a; --line: #d3dae4; --soft: #f4f6f9;
+    --accent: #2453c4; --accent-soft: #eef3fd; --ok: #0f7a5c; --ok-soft: #e3f4ee;
+    --warn: #9a5a00; --warn-line: #d08a1e; --warn-soft: #fff5e3;
+  }
+  * { box-sizing: border-box; }
+  html { background: #e4e8ee; }
+  body { margin: 0; color: var(--ink); font-family: "Yu Gothic UI", "BIZ UDPGothic", "Meiryo", "Hiragino Sans", sans-serif;
+         font-size: 16px; line-height: 1.75; }
+  main { max-width: 860px; margin: 24px auto; background: #fff; border-radius: 16px; padding: 32px 40px 24px;
+         box-shadow: 0 1px 3px rgba(20, 30, 50, .08); }
+  header { display: flex; align-items: center; gap: 16px; padding-bottom: 14px; border-bottom: 3px solid var(--accent); }
+  header svg { width: 56px; height: 56px; flex: none; }
+  h1 { font-size: 30px; line-height: 1.3; margin: 0; letter-spacing: .02em; }
+  header p { margin: 2px 0 0; color: var(--muted); }
+  h2 { font-size: 21px; line-height: 1.4; margin: 0 0 8px; }
+  h3 { font-size: 17px; margin: 0 0 4px; }
+  p { margin: 0 0 8px; }
+  a { color: var(--accent); }
+  .needs { margin: 20px 0 0; border: 2px solid var(--accent); background: var(--accent-soft); border-radius: 12px;
+           padding: 10px 16px; font-weight: 700; }
+  .phone { display: none; margin: 18px 0 0; border: 2px solid var(--warn-line); background: var(--warn-soft); border-radius: 12px;
+           padding: 12px 16px; }
+  .phone b { color: var(--warn); font-size: 18px; display: block; }
+  .steps { margin: 24px 0 0; display: grid; gap: 14px; }
+  .step { display: grid; grid-template-columns: 48px 1fr; gap: 0 16px; border: 1.5px solid var(--line); border-radius: 14px;
+          padding: 16px 20px 14px 16px; }
+  .n { width: 44px; height: 44px; border-radius: 50%; background: var(--accent); color: #fff; font-weight: 700; font-size: 22px;
+       display: grid; place-items: center; }
+  .step p { color: var(--muted); }
+  .step p b, .step li b { color: var(--ink); }
+  kbd { font-family: inherit; font-weight: 700; border: 1.5px solid var(--line); border-bottom-width: 3px; border-radius: 6px;
+        padding: 0 6px; background: #fff; color: var(--ink); white-space: nowrap; }
+  .line { display: flex; align-items: stretch; gap: 10px; margin: 6px 0 8px; }
+  code.cmd { flex: 1; font-family: "Consolas", "BIZ UDGothic", monospace; font-size: 15px; line-height: 1.55; background: #1f2a3a;
+             color: #f1f5fb; border-radius: 10px; padding: 12px 14px; word-break: break-all; user-select: all; }
+  button { font: inherit; font-weight: 700; cursor: pointer; border-radius: 10px; border: 2px solid var(--accent);
+           background: var(--accent); color: #fff; padding: 6px 18px; white-space: nowrap; }
+  button.sub { background: #fff; color: var(--accent); }
+  button.done { background: var(--ok); border-color: var(--ok); color: #fff; }
+  .flow { list-style: none; margin: 4px 0 8px; padding: 0; font-size: 15px; }
+  .flow li { padding: 2px 0 2px 26px; position: relative; color: var(--ink); }
+  .flow li::before { content: "›"; position: absolute; left: 8px; color: var(--accent); font-weight: 700; }
+  .flow li.last::before { content: "✓"; color: var(--ok); left: 6px; }
+  .safe { display: inline-block; background: var(--ok-soft); color: var(--ok); border-radius: 99px; padding: 0 10px; font-weight: 700;
+          font-size: 14px; }
+  section.more { margin: 26px 0 0; }
+  section.more > h2 { display: flex; align-items: center; gap: 8px; }
+  section.more > h2::before { content: ""; width: 5px; height: 1.1em; background: var(--accent); border-radius: 3px; }
+  .card { border: 1.5px solid var(--line); border-radius: 14px; padding: 14px 20px 10px; }
+  ol.mini { margin: 4px 0 8px; padding-left: 1.6em; }
+  ol.mini li { padding: 1px 0; }
+  .note { color: var(--muted); font-size: 14px; }
+  details { border: 1.5px solid var(--line); border-radius: 12px; padding: 0 16px; margin: 0 0 8px; }
+  details[open] { padding-bottom: 10px; }
+  summary { cursor: pointer; font-weight: 700; padding: 10px 0; }
+  details p { margin: 0 0 6px; }
+  code.inl { font-family: "Consolas", "BIZ UDGothic", monospace; font-size: 14px; border: 1px solid var(--line); background: var(--soft);
+             border-radius: 4px; padding: 0 4px; word-break: break-all; }
+  table { border-collapse: collapse; font-size: 14px; margin: 4px 0 6px; }
+  td { padding: 1px 12px 1px 0; vertical-align: top; }
+  footer { margin-top: 24px; padding-top: 10px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px;
+           display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 16px; }
+  .nw { white-space: nowrap; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  @media (max-width: 700px) {
+    body { font-size: 15px; }
+    main { margin: 0; border-radius: 0; padding: 18px 16px 16px; }
+    header svg { width: 44px; height: 44px; }
+    h1 { font-size: 24px; }
+    .phone { display: block; }
+    .step { grid-template-columns: 1fr; padding: 14px; }
+    .n { width: 34px; height: 34px; font-size: 18px; margin-bottom: 6px; }
+    .line { flex-direction: column; }
+    code.cmd { font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <!-- the app's icon (AppIconShape, as in docs\配布手順.html) -->
+    <svg viewBox="0 0 100 100" aria-hidden="true"><path d="M0 23.5C0 8.5 8.5 0 23.5 0H76.5C91.5 0 100 8.5 100 23.5V76.5C100 91.5 91.5 100 76.5 100H23.5C8.5 100 0 91.5 0 76.5Z" fill="#16ABE4"/><path d="M17.68 34.524L17.68 24.611A3.63 3.63 0 0 1 23.27 21.556L59.64 44.886A3.74 3.74 0 0 1 60.774 50.045L60.376 50.669A3.85 3.85 0 0 1 55.803 52.212L21.14 39.481A5.28 5.28 0 0 1 17.68 34.524Z" fill="#fff"/><path d="M24.39 74.05L24.39 64.794A4.51 4.51 0 0 1 27.466 60.518L42.554 55.459A2.53 2.53 0 0 1 45.887 57.793L45.934 59.615A6.71 6.71 0 0 1 43.362 65.071L29.013 76.302A2.86 2.86 0 0 1 24.39 74.05Z" fill="#fff"/><rect x="68.3" y="44.2" width="9.9" height="16.6" rx="1.7" fill="#fff"/></svg>
+    <div>
+      <h1>PCアシスタントを入れる</h1>
+      <p>Windows の PC に、2 つの手順で入ります<span class="nw">（数分）</span></p>
+    </div>
+  </header>
+
+  <!-- people open the link on a phone first -->
+  <div class="phone" id="phone">
+    <b>この画面は PC で開いてください</b>
+    <p>入れるのは Windows の PC です。このページのアドレスを PC に送って、PC で開いてください。</p>
+    <button type="button" class="sub" id="send">PC に送る</button>
+    <span class="note" id="send-msg" aria-live="polite"></span>
+  </div>
+
+  <p style="margin:18px 0 0">画面の右下に置いておく小さな窓です。やりたいことを書いて「頼む」を押すと、この PC の画面を操作して片付けます。</p>
+  <!-- D84: the two essentials, in the same words as the installer's last message, the guide and the README -->
+  <p class="needs">用意するもの：① AI（Claude か ChatGPT のサブスク、または API キー）② TypeSafe Jev のキー（取り方はアプリが案内します）</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="n">1</div>
+      <div>
+        <h2>PowerShell を開く</h2>
+        <p>画面の下の <b>スタート</b>（Windows のマーク）を押して <b>「PowerShell」</b> と入れ、<kbd>Enter</kbd>。<br>青か黒の窓が開きます。管理者として開く必要はありません。</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="n">2</div>
+      <div>
+        <h2>この 1 行を貼って <kbd>Enter</kbd></h2>
+        <div class="line">
+          <code class="cmd" id="cmd">irm https://github.com/skyblueearthjapan/pcassistant-releases/releases/latest/download/install-web.ps1 | iex</code>
+          <button type="button" data-copy="cmd">コピー</button>
+        </div>
+        <p>［コピー］を押してから、PowerShell の窓の中で <b>右クリック</b>すると貼れます（<kbd>Ctrl</kbd>+<kbd>V</kbd> でも）。</p>
+      </div>
+    </div>
+  </div>
+
+  <section class="more">
+    <h2>このあと</h2>
+    <div class="card">
+      <ul class="flow">
+        <li>最新の版を確かめています…</li>
+        <li>ダウンロードしています（約 300 MB）</li>
+        <li>本物の版か確かめています…</li>
+        <li>入れています…</li>
+        <li class="last">入れました。PCアシスタントを開きます</li>
+      </ul>
+      <p>開いたら <b>「はじめの設定」</b> を上から順に進めてください。窓の上の行が <b>「準備OK」</b> になれば使えます。次からはデスクトップの「PCアシスタント」で開きます。</p>
+      <p class="note"><span class="safe">安心</span>　配布元の署名がある版かを確かめてから入れます（途中で書き換えられたものや壊れたものは入れません）。この PC の自分のユーザーにだけ入り、管理者の権限は要りません。もう入っている PC では新しい版になります（設定・スキル・議事録はそのまま）。</p>
+    </div>
+  </section>
+
+  <section class="more">
+    <h2>ダウンロードしてダブルクリックでも入れられます</h2>
+    <div class="card">
+      <ol class="mini">
+        <li><a href="https://github.com/skyblueearthjapan/pcassistant-releases/releases/latest" rel="noreferrer">最新版のページ</a>を開き、「Assets」の <b>PCAssistant-（版）.zip</b> をダウンロード</li>
+        <li>ZIP を右クリック →「すべて展開」</li>
+        <li>中の <b>「PCアシスタントを入れる」</b> をダブルクリック</li>
+      </ol>
+      <p class="note">青い画面（「Windows によって PC が保護されました」）が出たら、<b>「詳細情報」→「実行」</b>。ダウンロードしたばかりのファイルに Windows が出す、いつもの確かめです。</p>
+    </div>
+  </section>
+
+  <section class="more">
+    <h2>うまくいかないとき</h2>
+    <details>
+      <summary>赤い文字で「スクリプトの実行が無効」「ポリシー」と出る（会社の PC でスクリプトが止められているとき）</summary>
+      <p>上の「ダウンロードしてダブルクリック」で入れてください。それでも止まるときは、PC を管理している人に相談してください。</p>
+    </details>
+    <details>
+      <summary>「最新の版を取りに行けませんでした」と出る（プロキシ）</summary>
+      <p>インターネットにつながっているか確かめて、もう一度貼ってください。会社のネットワークでは、プロキシで止められていることがあります。<b>github.com</b>・<b>objects.githubusercontent.com</b>・<b>release-assets.githubusercontent.com</b> につなげるよう管理している人に頼むか、上の「ダウンロードしてダブルクリック」で入れてください。</p>
+    </details>
+    <details>
+      <summary>「接続を確立できません」「SSL/TLS」と出る（古い Windows）</summary>
+      <p>代わりにこの 1 行を貼ってください。</p>
+      <div class="line">
+        <code class="cmd" id="cmd-tls">[Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor 3072; irm https://github.com/skyblueearthjapan/pcassistant-releases/releases/latest/download/install-web.ps1 | iex</code>
+        <button type="button" data-copy="cmd-tls">コピー</button>
+      </div>
+    </details>
+    <details>
+      <summary>「PCアシスタントが動いています」と出る</summary>
+      <p>画面右下の通知領域のアイコンを右クリック →「終了」してから、もう一度貼ってください。</p>
+    </details>
+    <details>
+      <summary>「本物の版か確かめられなかったので、やめました」と出る</summary>
+      <p>何も入っていません。しばらくしてからもう一度試して、同じときは配った人に知らせてください。</p>
+    </details>
+    <details>
+      <summary>ファイルとして保存してから動かしたい（まとめて入れる人へ）</summary>
+      <p><a href="https://github.com/skyblueearthjapan/pcassistant-releases/releases/latest/download/install-web.ps1" rel="noreferrer">install-web.ps1</a> を保存して、PowerShell で次のように動かします（保存したファイルは、この 1 回だけ <code class="inl">-ExecutionPolicy Bypass</code> を付けないと動きません。PC の設定は変えません）。</p>
+      <p><code class="inl">powershell -NoProfile -ExecutionPolicy Bypass -File .\install-web.ps1</code></p>
+      <table>
+        <tr><td>終わりのコード</td><td>0 入れた　1 取りに行けない　2 アプリが動いている　3 本物と確かめられない　4 入れられない　5 引数が違う</td></tr>
+      </table>
+    </details>
+  </section>
+
+  <footer>
+    <span>PCアシスタント</span>
+    <span>公開元：github.com/skyblueearthjapan/pcassistant-releases</span>
+  </footer>
+</main>
+<span class="sr" aria-live="polite" id="live"></span>
+<script>
+  // copy without any library: the Clipboard API where allowed, else a hidden text box
+  function copyText(text, done) {
+    function fallback() {
+      var t = document.createElement('textarea');
+      t.value = text; t.setAttribute('readonly', ''); t.style.position = 'fixed'; t.style.opacity = '0';
+      document.body.appendChild(t); t.select();
+      var ok = false;
+      try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+      document.body.removeChild(t);
+      done(ok);
+    }
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(function () { done(true); }, fallback);
+    } else {
+      fallback();
+    }
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('button[data-copy]'), function (b) {
+    b.addEventListener('click', function () {
+      copyText(document.getElementById(b.getAttribute('data-copy')).textContent, function (ok) {
+        b.textContent = ok ? 'コピーしました' : '選んでコピーしてください';
+        b.classList.toggle('done', ok);
+        document.getElementById('live').textContent = ok ? '1 行をコピーしました' : '';
+        setTimeout(function () { b.textContent = 'コピー'; b.classList.remove('done'); }, 2500);
+      });
+    });
+  });
+  document.getElementById('send').addEventListener('click', function () {
+    var msg = document.getElementById('send-msg');
+    copyText(location.href, function (ok) {
+      msg.textContent = ok ? 'アドレスをコピーしました。メールやチャットで自分の PC に送ってください。' : 'アドレス欄の URL を、メールやチャットで自分の PC に送ってください。';
+    });
+  });
+</script>
+</body>
+</html>
