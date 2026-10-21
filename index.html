@@ -31,7 +31,24 @@
   .phone { display: none; margin: 18px 0 0; border: 2px solid var(--warn-line); background: var(--warn-soft); border-radius: 12px;
            padding: 12px 16px; }
   .phone b { color: var(--warn); font-size: 18px; display: block; }
+  /* D130 (lane WI2): the download button first, three short steps under it */
+  .get { margin: 22px 0 0; border: 2px solid var(--accent); border-radius: 16px; padding: 22px 24px 16px; text-align: center; }
+  a.dl { display: inline-block; background: var(--accent); color: #fff; font-weight: 700; font-size: 22px; line-height: 1.4;
+         text-decoration: none; border-radius: 14px; padding: 14px 40px; box-shadow: 0 2px 6px rgba(36, 83, 196, .25); }
+  a.dl:hover, a.dl:focus-visible { background: #1b43a3; }
+  a.dl:focus-visible { outline: 3px solid #9db6f0; outline-offset: 3px; }
+  .get .gh { font-size: 15px; color: var(--muted); font-weight: 700; margin: 0 0 12px; letter-spacing: .04em; }
+  .get .file { margin: 6px 0 0; color: var(--muted); font-size: 14px; }
+  ol.three { list-style: none; margin: 16px 0 6px; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+             counter-reset: three; text-align: left; }
+  ol.three li { counter-increment: three; display: grid; grid-template-columns: 30px 1fr; gap: 0 8px; align-items: start;
+                background: var(--soft); border-radius: 12px; padding: 10px 12px; font-weight: 700; line-height: 1.5; }
+  ol.three li::before { content: counter(three); width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #fff;
+                        display: grid; place-items: center; font-size: 15px; }
+  .get .note { text-align: left; margin: 8px 0 0; }
   .steps { margin: 24px 0 0; display: grid; gap: 14px; }
+  .card .steps { margin: 8px 0 8px; gap: 10px; }
+  .card .step { border: none; background: var(--soft); }
   .step { display: grid; grid-template-columns: 48px 1fr; gap: 0 16px; border: 1.5px solid var(--line); border-radius: 14px;
           padding: 16px 20px 14px 16px; }
   .n { width: 44px; height: 44px; border-radius: 50%; background: var(--accent); color: #fff; font-weight: 700; font-size: 22px;
@@ -79,6 +96,9 @@
     h1 { font-size: 24px; }
     .phone { display: block; }
     .step { grid-template-columns: 1fr; padding: 14px; }
+    .get { padding: 16px 14px 12px; }
+    a.dl { display: block; font-size: 20px; padding: 14px 12px; }
+    ol.three { grid-template-columns: 1fr; }
     .n { width: 34px; height: 34px; font-size: 18px; margin-bottom: 6px; }
     .line { flex-direction: column; }
     code.cmd { font-size: 13px; }
@@ -92,7 +112,7 @@
     <svg viewBox="0 0 100 100" aria-hidden="true"><path d="M0 23.5C0 8.5 8.5 0 23.5 0H76.5C91.5 0 100 8.5 100 23.5V76.5C100 91.5 91.5 100 76.5 100H23.5C8.5 100 0 91.5 0 76.5Z" fill="#16ABE4"/><path d="M17.68 34.524L17.68 24.611A3.63 3.63 0 0 1 23.27 21.556L59.64 44.886A3.74 3.74 0 0 1 60.774 50.045L60.376 50.669A3.85 3.85 0 0 1 55.803 52.212L21.14 39.481A5.28 5.28 0 0 1 17.68 34.524Z" fill="#fff"/><path d="M24.39 74.05L24.39 64.794A4.51 4.51 0 0 1 27.466 60.518L42.554 55.459A2.53 2.53 0 0 1 45.887 57.793L45.934 59.615A6.71 6.71 0 0 1 43.362 65.071L29.013 76.302A2.86 2.86 0 0 1 24.39 74.05Z" fill="#fff"/><rect x="68.3" y="44.2" width="9.9" height="16.6" rx="1.7" fill="#fff"/></svg>
     <div>
       <h1>PCアシスタントを入れる</h1>
-      <p>Windows の PC に、2 つの手順で入ります<span class="nw">（数分）</span></p>
+      <p>Windows の PC に、ダウンロードしてダブルクリックで入ります<span class="nw">（数分）</span></p>
     </div>
   </header>
 
@@ -108,30 +128,23 @@
   <!-- D84: the two essentials, in the same words as the installer's last message, the guide and the README -->
   <p class="needs">用意するもの：① AI（Claude か ChatGPT のサブスク、または API キー）② TypeSafe Jev のキー（取り方はアプリが案内します）</p>
 
-  <div class="steps">
-    <div class="step">
-      <div class="n">1</div>
-      <div>
-        <h2>PowerShell を開く</h2>
-        <p>画面の下の <b>スタート</b>（Windows のマーク）を押して <b>「PowerShell」</b> と入れ、<kbd>Enter</kbd>。<br>青か黒の窓が開きます。管理者として開く必要はありません。</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="n">2</div>
-      <div>
-        <h2>この 1 行を貼って <kbd>Enter</kbd></h2>
-        <div class="line">
-          <code class="cmd" id="cmd">irm https://github.com/skyblueearthjapan/pcassistant-releases/releases/latest/download/install-web.ps1 | iex</code>
-          <button type="button" data-copy="cmd">コピー</button>
-        </div>
-        <p>［コピー］を押してから、PowerShell の窓の中で <b>右クリック</b>すると貼れます（<kbd>Ctrl</kbd>+<kbd>V</kbd> でも）。</p>
-      </div>
-    </div>
-  </div>
+  <!-- D130 (lane WI2): the download button and its three steps; the PowerShell line is the other way, further down -->
+  <section class="get" aria-labelledby="get-h">
+    <h2 id="get-h" class="gh">ダウンロードしてダブルクリック</h2>
+    <a class="dl" href="https://github.com/skyblueearthjapan/pcassistant-releases/releases/latest/download/PCAssistant-Setup.exe" rel="noreferrer">PCアシスタントをダウンロード</a>
+    <p class="file">PCAssistant-Setup.exe（小さなファイルです。本体はこのあと、署名を確かめながら取りに行きます）</p>
+    <ol class="three">
+      <li><span>ボタンを押す</span></li>
+      <li><span>下に出たファイル<span class="nw">（PCAssistant-Setup.exe）</span>を開く</span></li>
+      <li><span>青い画面が出たら「詳細情報」→「実行」</span></li>
+    </ol>
+    <p class="note">ブラウザーが「一般的にダウンロードされていません」などと止めたときは、そのファイルの「…」から <b>「保存」</b>（Chrome では <b>「保持する」</b>）を選んでください。</p>
+  </section>
 
   <section class="more">
     <h2>このあと</h2>
     <div class="card">
+      <p>「PCアシスタントを入れる」の窓に、次の順で出ます。閉じずに待ってください（ダウンロード中は［やめる］でやめられます。そのときは何も入りません）。</p>
       <ul class="flow">
         <li>最新の版を確かめています…</li>
         <li>ダウンロードしています（約 300 MB）</li>
@@ -139,13 +152,40 @@
         <li>入れています…</li>
         <li class="last">入れました。PCアシスタントを開きます</li>
       </ul>
-      <p>開いたら <b>「はじめの設定」</b> を上から順に進めてください。窓の上の行が <b>「準備OK」</b> になれば使えます。次からはデスクトップの「PCアシスタント」で開きます。</p>
+      <p>PCアシスタントが開いたら <b>「はじめの設定」</b> を上から順に進めてください。窓の上の行が <b>「準備OK」</b> になれば使えます。次からはデスクトップの「PCアシスタント」で開きます。</p>
       <p class="note"><span class="safe">安心</span>　配布元の署名がある版かを確かめてから入れます（途中で書き換えられたものや壊れたものは入れません）。この PC の自分のユーザーにだけ入り、管理者の権限は要りません。もう入っている PC では新しい版になります（設定・スキル・議事録はそのまま）。</p>
     </div>
   </section>
 
   <section class="more">
-    <h2>ダウンロードしてダブルクリックでも入れられます</h2>
+    <h2>別の入れ方（PowerShell に 1 行）</h2>
+    <div class="card">
+      <p class="note">会社の PC でダウンロードしたファイルが開けないときは、こちらで入れられます。入るものは同じです。</p>
+      <div class="steps">
+        <div class="step">
+          <div class="n">1</div>
+          <div>
+            <h3>PowerShell を開く</h3>
+            <p>画面の下の <b>スタート</b>（Windows のマーク）を押して <b>「PowerShell」</b> と入れ、<kbd>Enter</kbd>。<br>青か黒の窓が開きます。管理者として開く必要はありません。</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="n">2</div>
+          <div>
+            <h3>この 1 行を貼って <kbd>Enter</kbd></h3>
+            <div class="line">
+              <code class="cmd" id="cmd">irm https://github.com/skyblueearthjapan/pcassistant-releases/releases/latest/download/install-web.ps1 | iex</code>
+              <button type="button" data-copy="cmd">コピー</button>
+            </div>
+            <p>［コピー］を押してから、PowerShell の窓の中で <b>右クリック</b>すると貼れます（<kbd>Ctrl</kbd>+<kbd>V</kbd> でも）。窓に出る順番は上と同じです。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="more">
+    <h2>ZIP で入れる</h2>
     <div class="card">
       <ol class="mini">
         <li><a href="https://github.com/skyblueearthjapan/pcassistant-releases/releases/latest" rel="noreferrer">最新版のページ</a>を開き、「Assets」の <b>PCAssistant-（版）.zip</b> をダウンロード</li>
@@ -159,15 +199,27 @@
   <section class="more">
     <h2>うまくいかないとき</h2>
     <details>
-      <summary>赤い文字で「スクリプトの実行が無効」「ポリシー」と出る（会社の PC でスクリプトが止められているとき）</summary>
-      <p>上の「ダウンロードしてダブルクリック」で入れてください。それでも止まるときは、PC を管理している人に相談してください。</p>
+      <summary>青い画面（「Windows によって PC が保護されました」）が出る</summary>
+      <p><b>「詳細情報」</b>を押すと出る <b>「実行」</b>を押してください。ダウンロードしたばかりのファイルに Windows が出す、いつもの確かめです。入れる前に、配布元の署名がある版かをこのファイルが確かめます。</p>
+    </details>
+    <details>
+      <summary>ダウンロードが止められた（「一般的にダウンロードされていません」など）</summary>
+      <p>ブラウザーのダウンロードの一覧で、そのファイルの「…」から <b>「保存」</b>、続けて <b>「保持する」</b> を選んでください（Chrome では「保存」か「保持する」）。会社の設定でファイルが開けないときは、上の「別の入れ方（PowerShell に 1 行）」で入れてください。</p>
     </details>
     <details>
       <summary>「最新の版を取りに行けませんでした」と出る（プロキシ）</summary>
-      <p>インターネットにつながっているか確かめて、もう一度貼ってください。会社のネットワークでは、プロキシで止められていることがあります。<b>github.com</b>・<b>objects.githubusercontent.com</b>・<b>release-assets.githubusercontent.com</b> につなげるよう管理している人に頼むか、上の「ダウンロードしてダブルクリック」で入れてください。</p>
+      <p>インターネットにつながっているか確かめて、［もう一度］を押してください（PowerShell のときは、もう一度貼ります）。会社のネットワークでは、プロキシで止められていることがあります。<b>github.com</b>・<b>objects.githubusercontent.com</b>・<b>release-assets.githubusercontent.com</b> につなげるよう管理している人に頼むか、上の「ZIP で入れる」で入れてください。</p>
     </details>
     <details>
-      <summary>「接続を確立できません」「SSL/TLS」と出る（古い Windows）</summary>
+      <summary>「PCアシスタントが動いています」と出る</summary>
+      <p>画面右下の通知領域のアイコンを右クリック →「終了」してから、［もう一度］を押してください（PowerShell のときは、もう一度貼ります）。</p>
+    </details>
+    <details>
+      <summary>PowerShell で、赤い文字の「スクリプトの実行が無効」「ポリシー」と出る</summary>
+      <p>会社の PC でスクリプトが止められています。いちばん上の「ダウンロードしてダブルクリック」で入れてください。それでも止まるときは、PC を管理している人に相談してください。</p>
+    </details>
+    <details>
+      <summary>PowerShell で「接続を確立できません」「SSL/TLS」と出る（古い Windows）</summary>
       <p>代わりにこの 1 行を貼ってください。</p>
       <div class="line">
         <code class="cmd" id="cmd-tls">[Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor 3072; irm https://github.com/skyblueearthjapan/pcassistant-releases/releases/latest/download/install-web.ps1 | iex</code>
@@ -175,15 +227,11 @@
       </div>
     </details>
     <details>
-      <summary>「PCアシスタントが動いています」と出る</summary>
-      <p>画面右下の通知領域のアイコンを右クリック →「終了」してから、もう一度貼ってください。</p>
-    </details>
-    <details>
       <summary>「本物の版か確かめられなかったので、やめました」と出る</summary>
       <p>何も入っていません。しばらくしてからもう一度試して、同じときは配った人に知らせてください。</p>
     </details>
     <details>
-      <summary>ファイルとして保存してから動かしたい（まとめて入れる人へ）</summary>
+      <summary>PowerShell のファイルとして保存してから動かしたい（まとめて入れる人へ）</summary>
       <p><a href="https://github.com/skyblueearthjapan/pcassistant-releases/releases/latest/download/install-web.ps1" rel="noreferrer">install-web.ps1</a> を保存して、PowerShell で次のように動かします（保存したファイルは、この 1 回だけ <code class="inl">-ExecutionPolicy Bypass</code> を付けないと動きません。PC の設定は変えません）。</p>
       <p><code class="inl">powershell -NoProfile -ExecutionPolicy Bypass -File .\install-web.ps1</code></p>
       <table>
