@@ -57,6 +57,10 @@
   .now ol.three { grid-template-columns: 1fr; margin: 10px 0 6px; }
   .now .ss, .now .note { font-weight: 400; }
   .now .note { margin: 6px 0 0; }
+  /* WI5: Edge often stops the download at ①, so the 「保持する」 note sits right under ① */
+  .now .keep { margin: 6px 0 0; padding: 2px 0 2px 10px; border-left: 3px solid var(--warn-line); }
+  .now .keep .note { margin: 0; }
+  .now .keep .lead { color: var(--warn); font-weight: 700; }
   .now .again { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; margin: 10px 0 0; }
   .steps { margin: 24px 0 0; display: grid; gap: 14px; }
   .card .steps { margin: 8px 0 8px; gap: 10px; }
@@ -135,11 +139,10 @@
   <section class="now" id="now" aria-labelledby="now-h" hidden>
     <h2 id="now-h" tabindex="-1">いまここ：次はこの順です</h2>
     <ol class="three">
-      <li><span>ダウンロードの一覧<span class="nw">（Edge は右上）</span>で<span class="nw">「ファイルを開く」</span></span></li>
+      <li><div><span>ダウンロードの一覧<span class="nw">（Edge は右上）</span>で<span class="nw">「ファイルを開く」</span></span><div class="keep"><p class="note lead"><span class="nw">「ファイルを開く」が出ないとき</span><span class="nw">（止められたとき）：</span></p><div id="now-keep"></div></div></div></li>
       <li><div>青い画面は「詳細情報」→「実行」<div id="now-ss"></div></div></li>
       <li><span>「PCアシスタントを入れる」の窓が出たら、閉じずに待つ（入れ終わると自分で閉じて、PCアシスタントが開きます）</span></li>
     </ol>
-    <div id="now-keep"></div>
     <p class="again"><a href="https://github.com/skyblueearthjapan/pcassistant-releases/releases/latest/download/PCAssistant-Setup.exe" rel="noreferrer">もう一度ダウンロード</a><button type="button" class="sub" id="now-close">閉じる</button></p>
   </section>
 
