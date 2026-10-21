@@ -46,6 +46,18 @@
   ol.three li::before { content: counter(three); width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #fff;
                         display: grid; place-items: center; font-size: 15px; }
   .get .note { text-align: left; margin: 8px 0 0; }
+  /* WI4: the two blue SmartScreen screens, side by side; stacked on a narrow screen */
+  .ss { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 12px 0 0; text-align: left; }
+  .ss figure { margin: 0; }
+  .ss svg { display: block; width: 100%; height: auto; }
+  .ss figcaption { font-weight: 700; margin: 4px 0 0; line-height: 1.5; }
+  /* WI4: 「いまここ」, shown by the script after the download button (the steps below stay for a page without script) */
+  .now { margin: 22px 0 0; border: 2px solid var(--accent); border-radius: 16px; padding: 18px 24px 12px; }
+  .now h2 { margin: 0; outline: none; }
+  .now ol.three { grid-template-columns: 1fr; margin: 10px 0 6px; }
+  .now .ss, .now .note { font-weight: 400; }
+  .now .note { margin: 6px 0 0; }
+  .now .again { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; margin: 10px 0 0; }
   .steps { margin: 24px 0 0; display: grid; gap: 14px; }
   .card .steps { margin: 8px 0 8px; gap: 10px; }
   .card .step { border: none; background: var(--soft); }
@@ -96,12 +108,15 @@
     h1 { font-size: 24px; }
     .phone { display: block; }
     .step { grid-template-columns: 1fr; padding: 14px; }
-    .get { padding: 16px 14px 12px; }
+    .get, .now { padding: 16px 14px 12px; }
     a.dl { display: block; font-size: 20px; padding: 14px 12px; }
     ol.three { grid-template-columns: 1fr; }
     .n { width: 34px; height: 34px; font-size: 18px; margin-bottom: 6px; }
     .line { flex-direction: column; }
     code.cmd { font-size: 13px; }
+  }
+  @media (max-width: 600px) {
+    .ss { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -115,6 +130,18 @@
       <p>Windows の PC に、ダウンロードしてダブルクリックで入ります<span class="nw">（数分）</span></p>
     </div>
   </header>
+
+  <!-- WI4: 「いまここ」 after the download button; the script moves the two pictures and the notes in and back -->
+  <section class="now" id="now" aria-labelledby="now-h" hidden>
+    <h2 id="now-h" tabindex="-1">いまここ：次はこの順です</h2>
+    <ol class="three">
+      <li><span>ダウンロードの一覧<span class="nw">（Edge は右上）</span>で<span class="nw">「ファイルを開く」</span></span></li>
+      <li><div>青い画面は「詳細情報」→「実行」<div id="now-ss"></div></div></li>
+      <li><span>「PCアシスタントを入れる」の窓が出たら、閉じずに待つ（入れ終わると自分で閉じて、PCアシスタントが開きます）</span></li>
+    </ol>
+    <div id="now-keep"></div>
+    <p class="again"><a href="https://github.com/skyblueearthjapan/pcassistant-releases/releases/latest/download/PCAssistant-Setup.exe" rel="noreferrer">もう一度ダウンロード</a><button type="button" class="sub" id="now-close">閉じる</button></p>
+  </section>
 
   <!-- people open the link on a phone first -->
   <div class="phone" id="phone">
@@ -138,7 +165,35 @@
       <li><span>ダウンロードの一覧<span class="nw">（Edge は右上）</span>で<span class="nw">「ファイルを開く」</span></span></li>
       <li><span>青い画面が出たら「詳細情報」→「実行」</span></li>
     </ol>
-    <p class="note">ブラウザーが「一般的にダウンロードされていません」などと止めたときは、そのファイルにマウスを当てて「…」→ <b>「保存」</b>→ 次の窓の<span class="nw">［削除］の横の <b>∨</b></span> → <b>「保持する」</b>。</p>
+    <!-- WI4: the two blue SmartScreen screens as they look; what to press is ringed in orange (the EXE cannot explain it: it runs after) -->
+    <div class="ss">
+      <figure>
+        <svg viewBox="0 0 320 200" role="img" aria-label="1 枚目の青い画面「Windows によって PC が保護されました」。本文の下の「詳細情報」を押します。右下のボタンは「実行しない」だけです。">
+          <rect width="320" height="200" rx="4" fill="#0063b1"/>
+          <rect x="292" y="8" width="20" height="20" fill="#fff"/><path d="M297 13 l10 10 M307 13 l-10 10" stroke="#1f2523" stroke-width="1.6"/>
+          <text x="16" y="46" font-size="15" fill="#fff">Windows によって PC が保護されました</text>
+          <g font-size="10.5" fill="#e6eef8"><text x="16" y="72">Microsoft Defender SmartScreen は認識されない</text><text x="16" y="88">アプリの起動を停止しました。このアプリを実行すると、</text><text x="16" y="104">PC が危険にさらされる可能性があります。</text></g>
+          <text x="16" y="133" font-size="11" fill="#fff">詳細情報</text><line x1="16" y1="136" x2="60" y2="136" stroke="#fff" stroke-width="1"/>
+          <rect x="9" y="117" width="58" height="25" rx="5" fill="none" stroke="#f0b53a" stroke-width="3"/>
+          <rect x="226" y="162" width="82" height="26" fill="#fff"/><text x="267" y="179" text-anchor="middle" font-size="11" font-weight="700" fill="#000">実行しない</text>
+        </svg>
+        <figcaption>① 「詳細情報」を押す</figcaption>
+      </figure>
+      <figure>
+        <svg viewBox="0 0 320 200" role="img" aria-label="2 枚目の青い画面。アプリ: PCAssistant-Setup.exe、発行元: 不明な発行元。右下の「実行」を押します。">
+          <rect width="320" height="200" rx="4" fill="#0063b1"/>
+          <rect x="292" y="8" width="20" height="20" fill="#fff"/><path d="M297 13 l10 10 M307 13 l-10 10" stroke="#1f2523" stroke-width="1.6"/>
+          <text x="16" y="46" font-size="15" fill="#fff">Windows によって PC が保護されました</text>
+          <g font-size="10.5" fill="#e6eef8"><text x="16" y="72">Microsoft Defender SmartScreen は認識されない</text><text x="16" y="88">アプリの起動を停止しました。このアプリを実行すると、</text><text x="16" y="104">PC が危険にさらされる可能性があります。</text></g>
+          <g font-size="10.5" fill="#e6eef8"><text x="16" y="128">アプリ: PCAssistant-Setup.exe</text><text x="16" y="144">発行元: 不明な発行元</text></g>
+          <rect x="134" y="162" width="82" height="26" fill="#fff"/><text x="175" y="179" text-anchor="middle" font-size="11" font-weight="700" fill="#000">実行</text><rect x="226" y="162" width="82" height="26" fill="#fff"/><text x="267" y="179" text-anchor="middle" font-size="11" font-weight="700" fill="#000">実行しない</text>
+          <rect x="129" y="157" width="92" height="36" rx="5" fill="none" stroke="#f0b53a" stroke-width="3"/>
+        </svg>
+        <figcaption>② 出てきた「実行」を押す</figcaption>
+      </figure>
+    </div>
+    <p class="note" id="ss-note">「不明な発行元」と出ますが、このファイルではいつものことです。入れる前に、配布元の署名がある版かをこのファイルが確かめます。</p>
+    <p class="note" id="keep-note">ブラウザーが「一般的にダウンロードされていません」などと止めたときは、そのファイルにマウスを当てて「…」→ <b>「保存」</b>→ 次の窓の<span class="nw">［削除］の横の <b>∨</b></span> → <b>「保持する」</b>。</p>
   </section>
 
   <section class="more">
@@ -200,7 +255,7 @@
     <h2>うまくいかないとき</h2>
     <details>
       <summary>青い画面（「Windows によって PC が保護されました」）が出る</summary>
-      <p><b>「詳細情報」</b>を押すと出る <b>「実行」</b>を押してください。ダウンロードしたばかりのファイルに Windows が出す、いつもの確かめです。入れる前に、配布元の署名がある版かをこのファイルが確かめます。</p>
+      <p><b>「詳細情報」</b>を押すと出る <b>「実行」</b>を押してください（いちばん上の 2 枚の絵）。ダウンロードしたばかりのファイルに Windows が出す、いつもの確かめです。入れる前に、配布元の署名がある版かをこのファイルが確かめます。</p>
     </details>
     <details>
       <summary>ダウンロードが止められた（「一般的にダウンロードされていません」など）</summary>
@@ -280,6 +335,30 @@
       msg.textContent = ok ? 'アドレスをコピーしました。メールやチャットで自分の PC に送ってください。' : 'アドレス欄の URL を、メールやチャットで自分の PC に送ってください。';
     });
   });
+  // WI4: the download button keeps its plain link (the browser downloads as before); then 「いまここ」 replaces the
+  // button's box at the top, with the two pictures and both notes moved in (and back on 閉じる). #after shows it too.
+  (function () {
+    var now = document.getElementById('now'), get = document.querySelector('.get'), dl = document.querySelector('a.dl');
+    var close = document.getElementById('now-close'), head = document.getElementById('now-h');
+    var moves = [[document.querySelector('.get .ss'), 'now-ss'], [document.getElementById('ss-note'), 'now-ss'], [document.getElementById('keep-note'), 'now-keep']];
+    // guard: if any part is missing, leave the page as it is without script
+    if (!now || !get || !dl || !close || !head || moves.some(function (m) { return !m[0] || !document.getElementById(m[1]); })) { return; }
+    var marks = moves.map(function (m) { var c = document.createComment('wi4'); m[0].parentNode.insertBefore(c, m[0]); return c; });
+    function show() {
+      moves.forEach(function (m) { document.getElementById(m[1]).appendChild(m[0]); });
+      get.hidden = true; now.hidden = false;
+      now.scrollIntoView({ block: 'start' });
+      head.focus({ preventScroll: true });
+    }
+    dl.addEventListener('click', function () { setTimeout(show, 0); });
+    close.addEventListener('click', function () {
+      moves.forEach(function (m, i) { marks[i].parentNode.insertBefore(m[0], marks[i]); });
+      now.hidden = true; get.hidden = false;
+      get.scrollIntoView({ block: 'start' });
+      dl.focus({ preventScroll: true });
+    });
+    if (location.hash === '#after') { show(); }
+  })();
 </script>
 </body>
 </html>
