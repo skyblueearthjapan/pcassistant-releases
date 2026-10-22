@@ -16,7 +16,7 @@
   html { background: #e4e8ee; }
   body { margin: 0; color: var(--ink); font-family: "Yu Gothic UI", "BIZ UDPGothic", "Meiryo", "Hiragino Sans", sans-serif;
          font-size: 16px; line-height: 1.75; }
-  main { max-width: 860px; margin: 24px auto; background: #fff; border-radius: 16px; padding: 32px 40px 24px;
+  main { max-width: 980px; margin: 24px auto; background: #fff; border-radius: 16px; padding: 32px 40px 24px;
          box-shadow: 0 1px 3px rgba(20, 30, 50, .08); }
   header { display: flex; align-items: center; gap: 16px; padding-bottom: 14px; border-bottom: 3px solid var(--accent); }
   header svg { width: 56px; height: 56px; flex: none; }
@@ -28,6 +28,9 @@
   a { color: var(--accent); }
   .needs { margin: 20px 0 0; border: 2px solid var(--accent); background: var(--accent-soft); border-radius: 12px;
            padding: 10px 16px; font-weight: 700; }
+  .needs a.kg { display: inline-block; margin-left: 4px; background: #fff; border: 2px solid var(--accent); border-radius: 8px;
+                padding: 0 10px; line-height: 1.6; text-decoration: none; white-space: nowrap; }
+  .needs a.kg:hover, .needs a.kg:focus-visible { background: var(--accent); color: #fff; }
   .phone { display: none; margin: 18px 0 0; border: 2px solid var(--warn-line); background: var(--warn-soft); border-radius: 12px;
            padding: 12px 16px; }
   .phone b { color: var(--warn); font-size: 18px; display: block; }
@@ -46,6 +49,36 @@
   ol.three li::before { content: counter(three); width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #fff;
                         display: grid; place-items: center; font-size: 15px; }
   .get .note { text-align: left; margin: 8px 0 0; }
+  /* WI7: the two ways, side by side and alike: the same box, button, steps and closing note; subgrid lines the rows up */
+  h2.ways-h { margin: 22px 0 10px; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
+  h2.ways-h .sub { font-size: 15px; font-weight: 400; color: var(--muted); }
+  .ways { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: repeat(5, auto); gap: 0 16px; }
+  .ways > section { grid-row: span 5; display: grid; grid-template-rows: subgrid; row-gap: 12px; margin: 0; min-width: 0;
+                    border: 2px solid var(--accent); border-radius: 16px; padding: 20px 22px 18px; text-align: left; }
+  .ways .gh { margin: 0; font-size: 21px; color: var(--ink); letter-spacing: .02em; text-align: center; }
+  .ways a.dl, .ways button.big { display: block; width: 100%; font-size: 20px; line-height: 1.4; padding: 14px 16px; border-radius: 14px;
+                                 text-align: center; box-shadow: 0 2px 6px rgba(36, 83, 196, .25); }
+  .ways button.big:hover, .ways button.big:focus-visible { background: #1b43a3; border-color: #1b43a3; }
+  .ways button.big:focus-visible { outline: 3px solid #9db6f0; outline-offset: 3px; }
+  .ways button.big.done { background: var(--ok); border-color: var(--ok); }
+  .ways .what .file { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.6; }
+  .ways .what code.cmd { display: block; margin: 0; font-size: 13px; padding: 8px 12px; }
+  .ways ol.three { grid-template-columns: 1fr; margin: 0; gap: 8px; }
+  .ways ol.three .alt { display: block; font-weight: 400; color: var(--muted); font-size: 14px; }
+  .ways .tell { border-top: 1.5px solid var(--line); padding: 10px 2px 0; }
+  .ways .tell p { margin: 0; }
+  .ways .tell .note { margin: 2px 0 0; }
+  /* after ［コピー］: ① is ticked and ②③ are marked as the place to go on (the 「いまここ」 of this way) */
+  .paste.done ol.three li:first-child::before { content: "✓"; background: var(--ok); }
+  .paste.done ol.three li + li { background: var(--accent-soft); box-shadow: inset 0 0 0 2px var(--accent); }
+  .ways .here { display: none; margin-left: 8px; padding: 0 9px; border-radius: 99px; background: var(--accent); color: #fff; font-size: 13px;
+                vertical-align: 1px; white-space: nowrap; }
+  .paste.done .here { display: inline-block; }
+  .pass { margin: 14px 0 0; border: 1.5px solid var(--line); border-radius: 14px; padding: 14px 22px 12px; }
+  .pass h2 { font-size: 17px; margin: 0 0 6px; }
+  .pass .note { margin: 0; }
+  .pass .ss + .note { margin: 8px 0 0; }
+  .ways[hidden], .pass[hidden], .ways-h[hidden] { display: none; }
   /* WI4: the two blue SmartScreen screens, side by side; stacked on a narrow screen */
   .ss { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 12px 0 0; text-align: left; }
   .ss figure { margin: 0; }
@@ -61,6 +94,21 @@
   .now .keep { margin: 6px 0 0; padding: 2px 0 2px 10px; border-left: 3px solid var(--warn-line); }
   .now .keep .note { margin: 0; }
   .now .keep .lead { color: var(--warn); font-weight: 700; }
+  /* WI8: Edge's [ダウンロード] page route, three cropped screenshots (caption left, picture right; stacked on a narrow screen) */
+  .pass .kp-h { margin: 0 0 6px; }
+  .pass .kp-h b { color: var(--warn); }
+  .pass .kp-h .note { margin-left: 4px; }
+  .kp { padding: 0 0 2px; }
+  .kp3 { display: grid; gap: 10px; }
+  .kp3 figure { margin: 0; display: grid; grid-template-columns: minmax(0, 15em) minmax(0, 1fr); gap: 4px 16px; align-items: center; }
+  .kp3 figcaption { font-weight: 700; line-height: 1.5; color: var(--ink); }
+  .kp3 img { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+  .kp3 figure:first-child img { max-width: 600px; }
+  .kp3 figure + figure img { max-width: 470px; }
+  .kp .note { margin: 8px 0 0; }
+  .now .keep .kp .note { margin: 8px 0 0; }
+  .now .kp3 figcaption { font-size: 15px; }
+  .now .kp3 figure { grid-template-columns: minmax(0, 14em) minmax(0, 1fr); }
   .now .again { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; margin: 10px 0 0; }
   .steps { margin: 24px 0 0; display: grid; gap: 14px; }
   .card .steps { margin: 8px 0 8px; gap: 10px; }
@@ -117,10 +165,14 @@
     ol.three { grid-template-columns: 1fr; }
     .n { width: 34px; height: 34px; font-size: 18px; margin-bottom: 6px; }
     .line { flex-direction: column; }
+    .ways { grid-template-columns: 1fr; grid-template-rows: none; gap: 14px; }
+    .ways > section { grid-row: auto; grid-template-rows: none; padding: 16px 14px 14px; }
+    .pass { padding: 12px 14px 10px; }
     code.cmd { font-size: 13px; }
   }
   @media (max-width: 600px) {
     .ss { grid-template-columns: 1fr; }
+    .kp3 figure, .now .kp3 figure { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -131,7 +183,7 @@
     <svg viewBox="0 0 100 100" aria-hidden="true"><path d="M0 23.5C0 8.5 8.5 0 23.5 0H76.5C91.5 0 100 8.5 100 23.5V76.5C100 91.5 91.5 100 76.5 100H23.5C8.5 100 0 91.5 0 76.5Z" fill="#16ABE4"/><path d="M17.68 34.524L17.68 24.611A3.63 3.63 0 0 1 23.27 21.556L59.64 44.886A3.74 3.74 0 0 1 60.774 50.045L60.376 50.669A3.85 3.85 0 0 1 55.803 52.212L21.14 39.481A5.28 5.28 0 0 1 17.68 34.524Z" fill="#fff"/><path d="M24.39 74.05L24.39 64.794A4.51 4.51 0 0 1 27.466 60.518L42.554 55.459A2.53 2.53 0 0 1 45.887 57.793L45.934 59.615A6.71 6.71 0 0 1 43.362 65.071L29.013 76.302A2.86 2.86 0 0 1 24.39 74.05Z" fill="#fff"/><rect x="68.3" y="44.2" width="9.9" height="16.6" rx="1.7" fill="#fff"/></svg>
     <div>
       <h1>PCアシスタントを入れる</h1>
-      <p>Windows の PC に、ダウンロードしてダブルクリックで入ります<span class="nw">（数分）</span></p>
+      <p>Windows の PC に、2 つの入れ方のどちらかで入ります<span class="nw">（数分）</span></p>
     </div>
   </header>
 
@@ -156,53 +208,98 @@
 
   <p style="margin:18px 0 0">画面の右下に置いておく小さな窓です。やりたいことを書いて「頼む」を押すと、この PC の画面を操作して片付けます。</p>
   <!-- D84: the two essentials, in the same words as the installer's last message, the guide and the README -->
-  <p class="needs">用意するもの：① AI（Claude か ChatGPT のサブスク、または API キー）② TypeSafe Jev のキー（取り方はアプリが案内します）</p>
+  <!-- WI6 (D141): the TypeSafe key guide with pictures sits beside this page on the same site (keyguide.html, a plain link) -->
+  <p class="needs">用意するもの：① AI（Claude か ChatGPT のサブスク、または API キー）② TypeSafe Jev のキー（取り方はアプリが案内します） <a class="kg" href="keyguide.html">絵つきの取り方を開く</a></p>
 
-  <!-- D130 (lane WI2): the download button and its three steps; the PowerShell line is the other way, further down -->
-  <section class="get" aria-labelledby="get-h">
-    <h2 id="get-h" class="gh">ダウンロードしてダブルクリック</h2>
-    <a class="dl" href="https://github.com/skyblueearthjapan/pcassistant-releases/releases/latest/download/PCAssistant-Setup.exe" rel="noreferrer">PCアシスタントをダウンロード</a>
-    <p class="file">PCAssistant-Setup.exe（小さなファイルです。本体はこのあと、署名を確かめながら取りに行きます）</p>
-    <ol class="three">
-      <li><span>ボタンを押す</span></li>
-      <li><span>ダウンロードの一覧<span class="nw">（Edge は右上）</span>で<span class="nw">「ファイルを開く」</span></span></li>
-      <li><span>青い画面が出たら「詳細情報」→「実行」</span></li>
-    </ol>
-    <!-- WI4: the two blue SmartScreen screens as they look; what to press is ringed in orange (the EXE cannot explain it: it runs after) -->
-    <div class="ss">
-      <figure>
-        <svg viewBox="0 0 320 200" role="img" aria-label="1 枚目の青い画面「Windows によって PC が保護されました」。本文の下の「詳細情報」を押します。右下のボタンは「実行しない」だけです。">
-          <rect width="320" height="200" rx="4" fill="#0063b1"/>
-          <rect x="292" y="8" width="20" height="20" fill="#fff"/><path d="M297 13 l10 10 M307 13 l-10 10" stroke="#1f2523" stroke-width="1.6"/>
-          <text x="16" y="46" font-size="15" fill="#fff">Windows によって PC が保護されました</text>
-          <g font-size="10.5" fill="#e6eef8"><text x="16" y="72">Microsoft Defender SmartScreen は認識されない</text><text x="16" y="88">アプリの起動を停止しました。このアプリを実行すると、</text><text x="16" y="104">PC が危険にさらされる可能性があります。</text></g>
-          <text x="16" y="133" font-size="11" fill="#fff">詳細情報</text><line x1="16" y1="136" x2="60" y2="136" stroke="#fff" stroke-width="1"/>
-          <rect x="9" y="117" width="58" height="25" rx="5" fill="none" stroke="#f0b53a" stroke-width="3"/>
-          <rect x="226" y="162" width="82" height="26" fill="#fff"/><text x="267" y="179" text-anchor="middle" font-size="11" font-weight="700" fill="#000">実行しない</text>
-        </svg>
-        <figcaption>① 「詳細情報」を押す</figcaption>
-      </figure>
-      <figure>
-        <svg viewBox="0 0 320 200" role="img" aria-label="2 枚目の青い画面。アプリ: PCAssistant-Setup.exe、発行元: 不明な発行元。右下の「実行」を押します。">
-          <rect width="320" height="200" rx="4" fill="#0063b1"/>
-          <rect x="292" y="8" width="20" height="20" fill="#fff"/><path d="M297 13 l10 10 M307 13 l-10 10" stroke="#1f2523" stroke-width="1.6"/>
-          <text x="16" y="46" font-size="15" fill="#fff">Windows によって PC が保護されました</text>
-          <g font-size="10.5" fill="#e6eef8"><text x="16" y="72">Microsoft Defender SmartScreen は認識されない</text><text x="16" y="88">アプリの起動を停止しました。このアプリを実行すると、</text><text x="16" y="104">PC が危険にさらされる可能性があります。</text></g>
-          <g font-size="10.5" fill="#e6eef8"><text x="16" y="128">アプリ: PCAssistant-Setup.exe</text><text x="16" y="144">発行元: 不明な発行元</text></g>
-          <rect x="134" y="162" width="82" height="26" fill="#fff"/><text x="175" y="179" text-anchor="middle" font-size="11" font-weight="700" fill="#000">実行</text><rect x="226" y="162" width="82" height="26" fill="#fff"/><text x="267" y="179" text-anchor="middle" font-size="11" font-weight="700" fill="#000">実行しない</text>
-          <rect x="129" y="157" width="92" height="36" rx="5" fill="none" stroke="#f0b53a" stroke-width="3"/>
-        </svg>
-        <figcaption>② 出てきた「実行」を押す</figcaption>
-      </figure>
-    </div>
-    <p class="note" id="ss-note">「不明な発行元」と出ますが、このファイルではいつものことです。入れる前に、配布元の署名がある版かをこのファイルが確かめます。</p>
-    <p class="note" id="keep-note">ブラウザーが「一般的にダウンロードされていません」などと止めたときは、そのファイルにマウスを当てて「…」→ <b>「保存」</b>→ 次の窓の<span class="nw">［削除］の横の <b>∨</b></span> → <b>「保持する」</b>。</p>
+  <!-- WI7: the two ways side by side with the same weight (neither is called おすすめ). Each column has the same five
+       rows (heading, button, what it is, three steps, what you will see), lined up across the two. Stacked on a narrow screen. -->
+  <h2 class="ways-h">入れ方は 2 つ<span class="sub">どちらでも同じものが入ります</span></h2>
+  <div class="ways" id="ways">
+    <section class="paste" id="paste" aria-labelledby="paste-h">
+      <h2 id="paste-h" class="gh">コピーして貼る</h2>
+      <button type="button" class="big" data-copy="cmd">コピー</button>
+      <div class="what">
+        <code class="cmd" id="cmd">irm https://github.com/skyblueearthjapan/pcassistant-releases/releases/latest/download/install-web.ps1 | iex</code>
+        <noscript><p class="file">［コピー］が動かないときは、この 1 行をマウスで選んで <kbd>Ctrl</kbd>+<kbd>C</kbd></p></noscript>
+      </div>
+      <ol class="three">
+        <li><span>［コピー］を押す</span></li>
+        <li><span>スタートを右クリック →<span class="nw">「ターミナル」</span><span class="here" aria-hidden="true">次はここ</span><span class="alt">Windows 10 では「Windows PowerShell」。「（管理者）」の付かないほう</span></span></li>
+        <li><span>窓の中で右クリック<span class="nw">（貼り付け）</span><span class="nw">→ <kbd>Enter</kbd></span><span class="alt"><kbd>Ctrl</kbd>+<kbd>V</kbd> でも貼れます</span></span></li>
+      </ol>
+      <div class="tell">
+        <p><b>ダウンロードの警告や青い画面は出ません。</b></p>
+        <p class="note">会社の PC で止められたとき（赤い文字が出たとき）は、「ダウンロードしてダブルクリック」で入れてください。</p>
+      </div>
+    </section>
+
+    <section class="get" aria-labelledby="get-h">
+      <h2 id="get-h" class="gh">ダウンロードしてダブルクリック</h2>
+      <a class="dl" href="https://github.com/skyblueearthjapan/pcassistant-releases/releases/latest/download/PCAssistant-Setup.exe" rel="noreferrer">PCアシスタントをダウンロード</a>
+      <div class="what">
+        <p class="file">PCAssistant-Setup.exe（小さなファイルです。本体はこのあと、署名を確かめながら取りに行きます）</p>
+      </div>
+      <ol class="three">
+        <li><span>ボタンを押す</span></li>
+        <li><span>ダウンロードの一覧<span class="nw">（Edge は右上）</span>で<span class="nw">「ファイルを開く」</span></span></li>
+        <li><span>青い画面が出たら「詳細情報」→「実行」</span></li>
+      </ol>
+      <div class="tell">
+        <p><b>Edge と Windows の確かめが出ます。</b></p>
+        <p class="note">止められても、下の絵の順に押せば入れられます。</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- WI4/WI5: how to get past Edge and the two blue SmartScreen screens (download way only); what to press is ringed in
+       orange (the EXE cannot explain it: it runs after). The script moves these into 「いまここ」 and back. -->
+  <section class="pass" id="pass" aria-labelledby="pass-h">
+    <h2 id="pass-h">「ダウンロードしてダブルクリック」で出る確かめの通り方</h2>
+      <!-- WI8 (owner, sandbox 10-22): when Edge stops the file, its [ダウンロード] page is the clear way: real screenshots, cropped,
+           what to press ringed in the same orange. The pictures are inlined (docs\install-img\*.png, byte for byte) so this page
+           stays one file. -->
+      <p class="kp-h"><b>Edge に止められたとき</b><span class="note">（「一般的にダウンロードされていません」と出て、「ファイルを開く」が出ないとき）</span></p>
+      <div class="kp" id="keep-note">
+        <div class="kp3">
+          <figure><figcaption><span class="nw">① ダウンロードの一覧の</span><span class="nw">右上の「…」→</span><span class="nw">「[ダウンロード] ページを開く」</span></figcaption><img src="data:image/png;base64,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" data-file="dl-1-menu.png" width="828" height="131" alt="Edge のダウンロードの一覧。「PCAssistant-Setup.exe は一般的にダウンロードされていません」と出ています。一覧の右上の「…」を押し、出てきたメニューのいちばん上の「[ダウンロード] ページを開く」を押します。"></figure>
+          <figure><figcaption>② 止められた行の<span class="nw">［保存］</span><span class="nw">（「保持する」が出たら押す）</span></figcaption><img src="data:image/png;base64,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" data-file="dl-2-save.png" width="578" height="138" alt="Edge の [ダウンロード] ページ。止められた PCAssistant-Setup.exe の行に［保存］と［削除］があります。［保存］を押します。"></figure>
+          <figure><figcaption><span class="nw">③ ファイル名を押す</span> <span class="nw">→ 青い画面は</span><span class="nw">「詳細情報」→「実行」</span></figcaption><img src="data:image/png;base64,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" data-file="dl-3-open.png" width="578" height="138" alt="［保存］のあとの同じ行。ファイル名「PCAssistant-Setup.exe」と、その下の「1 つ上のフォルダーを開く」「ファイルの削除」。ファイル名を押すと開きます。"></figure>
+        </div>
+        <p class="note">一覧の行の「…」→「保存」→ ∨ →「保持する」でも入れられます。<b>「安全であることを報告する」は押しません</b>（Microsoft への申告の画面になり、入れられません）。</p>
+      </div>
+      <div class="ss">
+        <figure>
+          <svg viewBox="0 0 320 200" role="img" aria-label="1 枚目の青い画面「Windows によって PC が保護されました」。本文の下の「詳細情報」を押します。右下のボタンは「実行しない」だけです。">
+            <rect width="320" height="200" rx="4" fill="#0063b1"/>
+            <rect x="292" y="8" width="20" height="20" fill="#fff"/><path d="M297 13 l10 10 M307 13 l-10 10" stroke="#1f2523" stroke-width="1.6"/>
+            <text x="16" y="46" font-size="15" fill="#fff">Windows によって PC が保護されました</text>
+            <g font-size="10.5" fill="#e6eef8"><text x="16" y="72">Microsoft Defender SmartScreen は認識されない</text><text x="16" y="88">アプリの起動を停止しました。このアプリを実行すると、</text><text x="16" y="104">PC が危険にさらされる可能性があります。</text></g>
+            <text x="16" y="133" font-size="11" fill="#fff">詳細情報</text><line x1="16" y1="136" x2="60" y2="136" stroke="#fff" stroke-width="1"/>
+            <rect x="9" y="117" width="58" height="25" rx="5" fill="none" stroke="#f0b53a" stroke-width="3"/>
+            <rect x="226" y="162" width="82" height="26" fill="#fff"/><text x="267" y="179" text-anchor="middle" font-size="11" font-weight="700" fill="#000">実行しない</text>
+          </svg>
+          <figcaption>① 「詳細情報」を押す</figcaption>
+        </figure>
+        <figure>
+          <svg viewBox="0 0 320 200" role="img" aria-label="2 枚目の青い画面。アプリ: PCAssistant-Setup.exe、発行元: 不明な発行元。右下の「実行」を押します。">
+            <rect width="320" height="200" rx="4" fill="#0063b1"/>
+            <rect x="292" y="8" width="20" height="20" fill="#fff"/><path d="M297 13 l10 10 M307 13 l-10 10" stroke="#1f2523" stroke-width="1.6"/>
+            <text x="16" y="46" font-size="15" fill="#fff">Windows によって PC が保護されました</text>
+            <g font-size="10.5" fill="#e6eef8"><text x="16" y="72">Microsoft Defender SmartScreen は認識されない</text><text x="16" y="88">アプリの起動を停止しました。このアプリを実行すると、</text><text x="16" y="104">PC が危険にさらされる可能性があります。</text></g>
+            <g font-size="10.5" fill="#e6eef8"><text x="16" y="128">アプリ: PCAssistant-Setup.exe</text><text x="16" y="144">発行元: 不明な発行元</text></g>
+            <rect x="134" y="162" width="82" height="26" fill="#fff"/><text x="175" y="179" text-anchor="middle" font-size="11" font-weight="700" fill="#000">実行</text><rect x="226" y="162" width="82" height="26" fill="#fff"/><text x="267" y="179" text-anchor="middle" font-size="11" font-weight="700" fill="#000">実行しない</text>
+            <rect x="129" y="157" width="92" height="36" rx="5" fill="none" stroke="#f0b53a" stroke-width="3"/>
+          </svg>
+          <figcaption>② 出てきた「実行」を押す</figcaption>
+        </figure>
+      </div>
+      <p class="note" id="ss-note">「不明な発行元」と出ますが、このファイルではいつものことです。入れる前に、配布元の署名がある版かをこのファイルが確かめます。</p>
   </section>
 
   <section class="more">
     <h2>このあと</h2>
     <div class="card">
-      <p>「PCアシスタントを入れる」の窓に、次の順で出ます。閉じずに待ってください（ダウンロード中は［やめる］でやめられます。そのときは何も入りません）。</p>
+      <p>「PCアシスタントを入れる」の窓（コピーして貼ったときは PowerShell の窓）に、次の順で出ます。閉じずに待ってください（「PCアシスタントを入れる」の窓では、ダウンロード中に［やめる］でやめられます。そのときは何も入りません）。</p>
       <ul class="flow">
         <li>最新の版を確かめています…</li>
         <li>ダウンロードしています（約 290 MB）</li>
@@ -212,33 +309,6 @@
       </ul>
       <p>PCアシスタントが開いたら <b>「はじめの設定」</b> を上から順に進めてください。窓の上の行が <b>「準備OK」</b> になれば使えます。次からはデスクトップの「PCアシスタント」で開きます。</p>
       <p class="note"><span class="safe">安心</span>　配布元の署名がある版かを確かめてから入れます（途中で書き換えられたものや壊れたものは入れません）。この PC の自分のユーザーにだけ入り、管理者の権限は要りません。もう入っている PC では新しい版になります（設定・スキル・議事録はそのまま）。</p>
-    </div>
-  </section>
-
-  <section class="more">
-    <h2>別の入れ方（PowerShell に 1 行）</h2>
-    <div class="card">
-      <p class="note">会社の PC でダウンロードしたファイルが開けないときは、こちらで入れられます。入るものは同じです。</p>
-      <div class="steps">
-        <div class="step">
-          <div class="n">1</div>
-          <div>
-            <h3>PowerShell を開く</h3>
-            <p>画面の下の <b>スタート</b>（Windows のマーク）を押して <b>「PowerShell」</b> と入れ、<kbd>Enter</kbd>。<br>青か黒の窓が開きます。管理者として開く必要はありません。</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="n">2</div>
-          <div>
-            <h3>この 1 行を貼って <kbd>Enter</kbd></h3>
-            <div class="line">
-              <code class="cmd" id="cmd">irm https://github.com/skyblueearthjapan/pcassistant-releases/releases/latest/download/install-web.ps1 | iex</code>
-              <button type="button" data-copy="cmd">コピー</button>
-            </div>
-            <p>［コピー］を押してから、PowerShell の窓の中で <b>右クリック</b>すると貼れます（<kbd>Ctrl</kbd>+<kbd>V</kbd> でも）。窓に出る順番は上と同じです。</p>
-          </div>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -258,11 +328,11 @@
     <h2>うまくいかないとき</h2>
     <details>
       <summary>青い画面（「Windows によって PC が保護されました」）が出る</summary>
-      <p><b>「詳細情報」</b>を押すと出る <b>「実行」</b>を押してください（いちばん上の 2 枚の絵）。ダウンロードしたばかりのファイルに Windows が出す、いつもの確かめです。入れる前に、配布元の署名がある版かをこのファイルが確かめます。</p>
+      <p><b>「詳細情報」</b>を押すと出る <b>「実行」</b>を押してください（上の 2 枚の絵）。ダウンロードしたばかりのファイルに Windows が出す、いつもの確かめです。入れる前に、配布元の署名がある版かをこのファイルが確かめます。</p>
     </details>
     <details>
       <summary>ダウンロードが止められた（「一般的にダウンロードされていません」など）</summary>
-      <p>ブラウザーのダウンロードの一覧で、そのファイルにマウスを当てて「…」→ <b>「保存」</b>→ 次の窓の［削除］の横の <b>∨</b> → <b>「保持する」</b> を選んでください。会社の設定でファイルが開けないときは、上の「別の入れ方（PowerShell に 1 行）」で入れてください。</p>
+      <p>ダウンロードの一覧の右上の「…」→ <b>「[ダウンロード] ページを開く」</b>→ 止められた行の <b>［保存］</b>（「保持する」が出たら押す）→ <b>ファイル名</b>を押してください（上の絵の順です）。一覧の行の「…」→「保存」→ ∨ →「保持する」でも入れられます。<b>「安全であることを報告する」は押しません</b>（Microsoft への申告の画面になり、入れられません）。会社の設定でファイルが開けないときは、上の「コピーして貼る」で入れてください。</p>
     </details>
     <details>
       <summary>「最新の版を取りに行けませんでした」と出る（プロキシ）</summary>
@@ -274,7 +344,7 @@
     </details>
     <details>
       <summary>PowerShell で、赤い文字の「スクリプトの実行が無効」「ポリシー」と出る</summary>
-      <p>会社の PC でスクリプトが止められています。いちばん上の「ダウンロードしてダブルクリック」で入れてください。それでも止まるときは、PC を管理している人に相談してください。</p>
+      <p>会社の PC でスクリプトが止められています。上の「ダウンロードしてダブルクリック」で入れてください。それでも止まるときは、PC を管理している人に相談してください。</p>
     </details>
     <details>
       <summary>PowerShell で「接続を確立できません」「SSL/TLS」と出る（古い Windows）</summary>
@@ -326,8 +396,11 @@
     b.addEventListener('click', function () {
       copyText(document.getElementById(b.getAttribute('data-copy')).textContent, function (ok) {
         b.textContent = ok ? 'コピーしました' : '選んでコピーしてください';
+        var code = document.getElementById(b.getAttribute('data-copy')), way = b.closest('.paste');
         b.classList.toggle('done', ok);
-        document.getElementById('live').textContent = ok ? '1 行をコピーしました' : '';
+        if (ok && way) { way.classList.add('done'); }
+        if (!ok) { var r = document.createRange(); r.selectNodeContents(code); var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r); }
+        document.getElementById('live').textContent = ok ? (way ? '1 行をコピーしました。次は、スタートを右クリックして「ターミナル」を開き、窓の中で右クリックして Enter' : '1 行をコピーしました') : '';
         setTimeout(function () { b.textContent = 'コピー'; b.classList.remove('done'); }, 2500);
       });
     });
@@ -339,25 +412,25 @@
     });
   });
   // WI4: the download button keeps its plain link (the browser downloads as before); then 「いまここ」 replaces the
-  // button's box at the top, with the two pictures and both notes moved in (and back on 閉じる). #after shows it too.
+  // two ways and the pictures under them (WI7), with the two pictures and both notes moved in (and back on 閉じる). #after shows it too.
   (function () {
-    var now = document.getElementById('now'), get = document.querySelector('.get'), dl = document.querySelector('a.dl');
+    var now = document.getElementById('now'), ways = document.getElementById('ways'), pass = document.getElementById('pass'), waysH = document.querySelector('.ways-h'), dl = document.querySelector('a.dl');
     var close = document.getElementById('now-close'), head = document.getElementById('now-h');
-    var moves = [[document.querySelector('.get .ss'), 'now-ss'], [document.getElementById('ss-note'), 'now-ss'], [document.getElementById('keep-note'), 'now-keep']];
+    var moves = [[document.querySelector('#pass .ss'), 'now-ss'], [document.getElementById('ss-note'), 'now-ss'], [document.getElementById('keep-note'), 'now-keep']];
     // guard: if any part is missing, leave the page as it is without script
-    if (!now || !get || !dl || !close || !head || moves.some(function (m) { return !m[0] || !document.getElementById(m[1]); })) { return; }
+    if (!now || !ways || !pass || !waysH || !dl || !close || !head || moves.some(function (m) { return !m[0] || !document.getElementById(m[1]); })) { return; }
     var marks = moves.map(function (m) { var c = document.createComment('wi4'); m[0].parentNode.insertBefore(c, m[0]); return c; });
     function show() {
       moves.forEach(function (m) { document.getElementById(m[1]).appendChild(m[0]); });
-      get.hidden = true; now.hidden = false;
+      ways.hidden = true; pass.hidden = true; waysH.hidden = true; now.hidden = false;
       now.scrollIntoView({ block: 'start' });
       head.focus({ preventScroll: true });
     }
     dl.addEventListener('click', function () { setTimeout(show, 0); });
     close.addEventListener('click', function () {
       moves.forEach(function (m, i) { marks[i].parentNode.insertBefore(m[0], marks[i]); });
-      now.hidden = true; get.hidden = false;
-      get.scrollIntoView({ block: 'start' });
+      now.hidden = true; ways.hidden = false; pass.hidden = false; waysH.hidden = false;
+      waysH.scrollIntoView({ block: 'start' });
       dl.focus({ preventScroll: true });
     });
     if (location.hash === '#after') { show(); }
